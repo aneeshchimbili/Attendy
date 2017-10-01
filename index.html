@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>IEOR 171 Attendance</title>
+  <!-- bootstrap & fontawesome css -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" type="text/css" href="design.css">
+  <!-- BootstrapValidator CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+  <!-- jQuery and Bootstrap JS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  <!-- BootstrapValidator JS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+
+
+
+  <script type="text/javascript" src="cookieRedirect.js"></script> 
+</head>
+<body>
+</head>
+
+<body>
+  <div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h2><center>IEOR 171 Attendance</center></h2>
+
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="location"></label>
+            <div class="col-lg-3 inputGroupContainer">
+                <div class="input-group">
+                    <cfform action="gps2.cfm" method="post">
+                         <input type="hidden" id="Latitude" name="Latitude" value="" readonly>
+                         <input type="hidden" id="Longitude" name="Longitude" value="" readonly>
+                         <button type="button" class="btn btn-success" name="location" id="location"
+                          onclick="getLocationConstant()">Verify My Location</button>
+                          <label id="barrowsLabel"></label>
+                          <input type="hidden" id="inbarrows" name="In Barrows 60?" value="NO">
+                    </cfform>
+                </div>
+            </div>
+        </div>
+
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeHA_WXkHsLFbhyaCvXqDbpIniRqoCmkWDp5tZuCYI3477i2A/viewform?embedded=true" width="1200" height="900" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+
+        <div class="form-group">
+        <label class="col-lg-3 control-label" ></label>
+            <div class="col-lg-3 inputGroupContainer">
+                <div class="input-group">
+<!--                     <button type="submit" class="btn btn-primary" id="postForm">Submit</button>
+ -->                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+</body>
+
+<script type="text/javascript">
+function getLocationConstant()
+{
+    $('#location').text("Verifying...");
+    $('#location').append($('<span></span>').addClass('glyphicon glyphicon-refresh glyphicon-refresh-animate'));
+    if(navigator.geolocation)
+    {
+        navigator.geolocation.getCurrentPosition(onGeoSuccess,onGeoError);
+    } else {
+        alert("Your browser or device doesn't support Geolocation.");
+    }
+}
+
+// If we have a successful location update
+function onGeoSuccess(event)
+{
+  // 37.867840 -122.257493
+    document.getElementById("Latitude").value =  event.coords.latitude;
+    document.getElementById("Longitude").value = event.coords.longitude;
+    if (event.coords.latitude > 35.870274 && event.coords.latitude < 39.870274
+        && event.coords.longitude < -120.268674 && event.coords.longitude > -124.268674) {
+        if ($('#location').hasClass("btn btn-success")) {
+            $("#location").removeClass("btn btn-success").addClass("btn btn-success disabled");
+        } else if ($('#location').hasClass("btn btn-danger")) {
+            $("#location").removeClass("btn btn-danger").addClass("btn btn-success disabled");
+        }
+        $('#location').text("Verified!");
+        document.getElementById("barrowsLabel").style.color = 'green';
+        document.getElementById("barrowsLabel").innerHTML = 'You are in Barrows 60.';
+        document.getElementById("barrowsLabel").style.display = 'block';
+        document.getElementById("inbarrows").value = "YES";
+    } else {
+        if ($('#location').hasClass("btn btn-success")) {
+            $("#location").removeClass("btn btn-success").addClass("btn btn-danger");
+        }
+        document.getElementById("barrowsLabel").style.display = 'block';
+        $('#location').text("Try again");
+    }
+}
+
+// If something has gone wrong with the geolocation request
+function onGeoError(event)
+{
+    alert("Error code " + event.code + ". " + event.message);
+    $('#location').text("Try again");
+}
+</script>
+
+<style>
+/*<!-- Animated Loading Icon -->*/
+.glyphicon-refresh-animate {
+      -animation: spin .7s infinite linear;
+      -webkit-animation: spin2 .7s infinite linear;
+}
+@-webkit-keyframes spin2 {
+      from { -webkit-transform: rotate(0deg);}
+      to { -webkit-transform: rotate(360deg);}
+}
+@keyframes spin {
+      from { transform: scale(1) rotate(0deg);}
+      to { transform: scale(1) rotate(360deg);}
+}
+
+</style>
+
+
+<footer>
+<script src="validation-functions.js"></script>
+</footer>
+
+</html>

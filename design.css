@@ -1,0 +1,62 @@
+#Latitude{-webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+#Longitude{
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.5;       /* Likely future */
+}
+
+label {
+    display: inline-block;
+    float: left;
+    width: 550px;
+    vertical-align: middle;
+}
+
+#falsifyingLabel {
+  width: 100%;
+}
+#prof {
+  width: 100%;
+}
+
+#ack {
+  width: 100%;
+  color: grey;
+}
+
+textarea {
+    vertical-align: middle;
+}
+
+.form-group {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*#location {
+  display: inherit;
+}
+
+#postForm {
+  display: inherit;
+}*/
+/*.input-group {
+  display: inherit;
+}*/
+
+#stanleyLabel {
+  float: right;
+  display: none;
+  color: red;
+}
